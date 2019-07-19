@@ -7,7 +7,7 @@
     <keep-alive>
         <component
             :is="activeTab"
-            :todos="todos"
+            :incompletedTodos="incompletedTodos"
             @add-todo="onAddTodo"
             @complete-todo="onCompleteTodo"
         ></component>
@@ -35,6 +35,11 @@ export default {
       AddTodo,
       CompletedTodos,
       IncompletedTodos,
+  },
+  computed: {
+      incompletedTodos() {
+          return this.todos.filter(x => !x.completed);
+      }
   },
   methods: {
         changeTab(tabName) {

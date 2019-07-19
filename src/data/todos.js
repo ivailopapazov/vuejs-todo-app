@@ -21,6 +21,7 @@ export const todos = [
   },
   {
     id: 4,
-    name: 'Fix the car'
+    name: 'Fix the car',
+    completed: false
   }
 ]
