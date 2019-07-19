@@ -52,7 +52,8 @@ export default {
         this.todos.push({
             id: this.todoIncrementId++,
             name: todoName,
-            completed: false
+            completed: false,
+            edit: false
         });
     },
     getTodo(id) {
@@ -71,10 +72,32 @@ export default {
     onDeleteTodo(todoId) {
         this.todos = this.todos.filter(x => x.id !== todoId);
     },
+    onEditTodo(todoId) {
+        if (this.todos.some(t => t.edit)) {
+            return;
+        }
+
+        let currentTodo = this.getTodo(todoId);
+        currentTodo.edit = true;
+    },  
+    onFinishEditTodo(modifiedTodo) {
+        this.todos = this.todos.map(x => {
+            if (x.id === modifiedTodo.id) {
+                modifiedTodo.edit = false;
+                return modifiedTodo;
+            }
+
+            return x;
+        });
+
+
+    },
     addEventListeners() {
       this.$parent.$on('delete-todo', this.onDeleteTodo);
       this.$parent.$on('complete-todo', this.onCompleteTodo);
       this.$parent.$on('restore-todo', this.onRestoreTodo);
+      this.$parent.$on('edit-todo', this.onEditTodo);
+      this.$parent.$on('finish-edit-todo', this.onFinishEditTodo);
     }
   },
   mounted() {

@@ -1,6 +1,7 @@
 <template>
     <li>
-        <label>{{todo.name}}</label>
+        <input v-if="todo.edit" @keyup.enter="finishEdit" v-model="newName" type="text" />
+        <label v-else @dblclick="editTodo">{{todo.name}}</label>
         <button class="complete" @click="completeTodo(todo.id)">Complete</button>
         <button class="delete" @click="deleteTodo(todo.id)">Delete</button>
     </li>
@@ -9,6 +10,11 @@
 <script>
 export default {
     name: 'todo-item',
+    data() {
+        return {
+            newName: this.todo.name
+        }
+    },
     props: {
         todo: {
             type: Object,
@@ -21,6 +27,12 @@ export default {
         },
         deleteTodo(todoId) {
             this.$root.$emit('delete-todo', todoId);
+        },
+        editTodo() {
+            this.$root.$emit('edit-todo', this.todo.id);
+        },
+        finishEdit() {
+            this.$root.$emit('finish-edit-todo', Object.assign({}, this.todo, {name: this.newName}));
         }
     }
 }
