@@ -12,6 +12,7 @@
             @add-todo="onAddTodo"
             @complete-todo="onCompleteTodo"
             @restore-todo="onRestoreTodo"
+            @delete-todo="onDeleteTodo"
         ></component>
     </keep-alive>
 </div>
@@ -69,6 +70,9 @@ export default {
         let currentTodo = this.getTodo(todoId);
 
         currentTodo.completed = false;
+    },
+    onDeleteTodo(todoId) {
+        this.todos = this.todos.filter(x => x.id !== todoId);
     }
   }
 }
