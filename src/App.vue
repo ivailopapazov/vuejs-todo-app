@@ -11,6 +11,7 @@
             :completedTodos="completedTodos"
             @add-todo="onAddTodo"
             @complete-todo="onCompleteTodo"
+            @restore-todo="onRestoreTodo"
         ></component>
     </keep-alive>
 </div>
@@ -46,22 +47,29 @@ export default {
       }
   },
   methods: {
-        changeTab(tabName) {
-            this.activeTab = tabName;
-        },
-        onAddTodo(todoName) {
-            this.todos.push({
-                id: this.todoIncrementId++,
-                name: todoName,
-                completed: false
-            });
-        },
-        onCompleteTodo(todoId) {
-            let currentTodo = this.todos.find(x => x.id === todoId);
-            console.log(todoId);
-            
-            currentTodo.completed = true;
-        }
+    changeTab(tabName) {
+        this.activeTab = tabName;
+    },
+    onAddTodo(todoName) {
+        this.todos.push({
+            id: this.todoIncrementId++,
+            name: todoName,
+            completed: false
+        });
+    },
+    getTodo(id) {
+        return this.todos.find(x => x.id === id);
+    },
+    onCompleteTodo(todoId) {
+        let currentTodo = this.getTodo(todoId);
+
+        currentTodo.completed = true;
+    },
+    onRestoreTodo(todoId) {
+        let currentTodo = this.getTodo(todoId);
+
+        currentTodo.completed = false;
+    }
   }
 }
 </script>
