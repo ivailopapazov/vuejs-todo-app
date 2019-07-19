@@ -2,16 +2,24 @@
 <div>
     <h3>Todo</h3>
     <ul id="incomplete-tasks">
-    <li v-for="todo in incompletedTodos" :key="todo.id">
+    <!-- <li v-for="todo in incompletedTodos" :key="todo.id">
         <label>{{todo.name}}</label>
         <button class="complete" @click="completeTodo(todo.id)">Complete</button>
         <button class="delete" @click="deleteTodo(todo.id)">Delete</button>
-    </li>
+    </li> -->
+
+    <todo-item 
+        v-for="todo in incompletedTodos"
+        :key="todo.id"
+        :todo="todo"
+    ></todo-item>
     </ul>
 </div>
 </template>
 
 <script>
+import TodoItem from './TodoItem'
+
 export default {
     name: 'incompleted-todos',
     props: {
@@ -20,32 +28,12 @@ export default {
             required: true
         }
     },
-    methods: {
-        completeTodo(todoId) {
-            this.$emit('complete-todo', todoId);
-        },
-        deleteTodo(todoId) {
-            this.$emit('delete-todo', todoId);
-        }
+    components: {
+        TodoItem
     }
 }
 </script>
 
-<style scoped>
-/* ToDo List */
-li {
-  overflow: hidden;
-  padding: 20px 0;
-  border-bottom: 1px solid #eee;
-}
-li > label {
-  font-size: 18px;
-  line-height: 40px;
-  width: 237px;
-  padding: 0 0 0 11px;
-}
+<style>
 
-button {
-  margin: 0 0 0 10px;
-}
 </style>

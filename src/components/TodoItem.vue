@@ -1,28 +1,23 @@
 <template>
-<div>
-    <h3>Completed</h3>
-    <ul id="completed-tasks">
-    <li v-for="todo in completedTodos" :key="todo.id">
+    <li>
         <label>{{todo.name}}</label>
-        <button class="restore" @click="restoreTodo(todo.id)">Restore</button>
+        <button class="complete" @click="completeTodo(todo.id)">Complete</button>
         <button class="delete" @click="deleteTodo(todo.id)">Delete</button>
     </li>
-    </ul>
-</div>
 </template>
 
 <script>
 export default {
-    name: 'completed-todos',
+    name: 'todo-item',
     props: {
-        completedTodos: {
-            type: Array,
+        todo: {
+            type: Object,
             required: true
         }
     },
     methods: {
-        restoreTodo(todoId) {
-            this.$root.$emit('restore-todo', todoId);
+        completeTodo(todoId) {
+            this.$root.$emit('complete-todo', todoId);
         },
         deleteTodo(todoId) {
             this.$root.$emit('delete-todo', todoId);
@@ -32,12 +27,7 @@ export default {
 </script>
 
 <style scoped>
-/* Completed Tasks */
-#completed-tasks label {
-  text-decoration: line-through;
-  color: #888;
-}
-
+/* ToDo List */
 li {
   overflow: hidden;
   padding: 20px 0;
@@ -49,7 +39,8 @@ li > label {
   width: 237px;
   padding: 0 0 0 11px;
 }
-li > .delete:hover {
-  color: #cf2323;
+
+button {
+  margin: 0 0 0 10px;
 }
 </style>

@@ -10,9 +10,6 @@
             :incompletedTodos="incompletedTodos"
             :completedTodos="completedTodos"
             @add-todo="onAddTodo"
-            @complete-todo="onCompleteTodo"
-            @restore-todo="onRestoreTodo"
-            @delete-todo="onDeleteTodo"
         ></component>
     </keep-alive>
 </div>
@@ -73,7 +70,15 @@ export default {
     },
     onDeleteTodo(todoId) {
         this.todos = this.todos.filter(x => x.id !== todoId);
+    },
+    addEventListeners() {
+      this.$parent.$on('delete-todo', this.onDeleteTodo);
+      this.$parent.$on('complete-todo', this.onCompleteTodo);
+      this.$parent.$on('restore-todo', this.onRestoreTodo);
     }
+  },
+  mounted() {
+      this.addEventListeners();
   }
 }
 </script>
